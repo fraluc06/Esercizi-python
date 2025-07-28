@@ -77,9 +77,16 @@ def split_string(string: str, characters: str = '') -> List[str]:
 # Scrivere una funziona che si comporta come `str.replace()`.
 # Usare solo costrutti del linguaggio e non librerie.
 def replace_substring(string: str, find: str, replace: str) -> str:
-    # for i in range(0, len(string)+1):
-        pass
-        
+    result = ''
+    i = 0
+    while i < len(string):
+        if string[i:i + len(find)] == find:
+            result += replace
+            i += len(find)
+        else:
+            result += string[i]
+            i += 1
+    return result
 
 
 # Scrivere una funzione che codifica un messaggio con il cifrario di
@@ -150,7 +157,13 @@ def reverse_list(elements: list) -> list:
 # Usare la funzione `isinstance()` per determinare se un elemento è una lista.
 # Usare solo costrutti del linguaggio e non librerie.
 def flatten_list(elements: list) -> list:
-    pass
+    flat_list = []
+    for i in elements:
+        if isinstance(i, list):
+            flat_list.extend(flatten_list(i))
+        else:
+            flat_list.append(i)
+    return flat_list
 
 
 # Test funzioni
