@@ -26,15 +26,15 @@ def cubic_root(n):
 # data è valida o no. Si possono ignorare gli anni bisestili. Ad esempio,
 # ritorna `False` per `30/2/2017` e `True` per `1/1/1111`.
 def check_date(d, m, y):
-    if(d>31 or d<1):
+    if d>31 or d<1:
         return False
-    if(m>12 or m<1):
+    if m>12 or m<1:
         return False
-    if(m==11 or m==4 or m==6 or m==9 and d==31):
+    if m==11 or m==4 or m==6 or m==9 and d==31:
         return False
-    if(m==2 and d>28):
+    if m==2 and d>28:
         return False
-    
+
 
 
 ################################################################################
@@ -69,7 +69,7 @@ def strip_whitespace(string: str) -> str:
 # Usare solo costrutti del linguaggio e non librerie.
 def split_string(string: str, characters: str = '') -> List[str]:
     for i in range(0, len(string)+1):
-        if (string.find(characters)):
+        if string.find(characters):
             string.replace(characters, "")
     return list(string)
 
@@ -98,7 +98,17 @@ def replace_substring(string: str, find: str, replace: str) -> str:
 # fatto delle sole lettere dell'alfabeto inglese e spazi che non sono crittati.
 # Suggerimento: Sono utili le funzioni `ord()` e `chr()`.
 def caesar_cypher(string: str, offset: int, decrypt: bool = False) -> str:
-    pass
+    if decrypt:
+        offset = -offset
+    result = ''
+    for character in string:
+        if character == ' ':
+            result += ' '
+        else:
+            index = ord(character) - ord('a')
+            new_index = (index + offset) % 26
+            result += chr(new_index + ord('a'))
+    return result
 
 
 # Test funzioni

@@ -3,7 +3,6 @@ from typing import Any, Callable, List
 
 # Stampa un test
 def print_test(func: Callable, *args: List[Any]):
-    func_str = func.__name__
     args_str = ', '.join(repr(arg) for arg in args)
     try:
         result = func(*args)
