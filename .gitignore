@@ -6,6 +6,13 @@ __pycache__/
 
 # Intellij IDEA
 .idea
+*.iml
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
 
 # C extensions
 *.so

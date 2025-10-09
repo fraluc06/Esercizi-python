@@ -21,7 +21,7 @@ Per testare correttamente la ricorsione è, però, necessario DEBUG=False.
 """
 nome       = "N"
 cognome    = "C"
-matricola  = "2097837"
+matricola  = "20"
 
 
 #########################################
@@ -51,12 +51,16 @@ dev'essere ordinata in ordine di lunghezza crescente e in caso di parità
 in ordine alfabetico inverso.
 '''
 def func1(string_list1, string_list2):
-    def criterio(s):
-        return -len(s), s
-    risultato  = [ x for x in string_list1 if x not in string_list2 ]
-    risultato += [ x for x in string_list2 if x not in string_list1 ]
-    return sorted(risultato, reverse=True, key=criterio)
-
+    res_list = []
+    for string in string_list1:
+        if string not in string_list2:
+            res_list.append(string)
+    for string in string_list2:
+        if string not in string_list1:
+            res_list.append(string)
+    res_list.sort(reverse=True)  # alfabetico inverso
+    res_list.sort(key=len)  # lunghezza crescente (stabile)
+    return res_list
 
 # %% -------------------------------- FUNC.2 -------------------------------- #
 ''' func2: 2 punti
@@ -75,9 +79,10 @@ art
 Nota:
   Aprire il file con encoding 'utf-8'.
 '''
-def func2(path_to_file):
-    # Inserire qui il proprio codice
-    pass
+def func2(pathname):
+    with open(pathname, encoding='utf-8') as f:
+        text = f.read()
+        return { c: text.count(c) for c in text }
 
 # %% -------------------------------- FUNC.3 -------------------------------- #
 '''  func3: 2 punti
