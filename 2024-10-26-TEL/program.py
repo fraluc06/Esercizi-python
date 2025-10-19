@@ -40,12 +40,17 @@ Esempio: se a_dict = {'a':['a','b','c'], 'b':['a','b'], 'c':['a','c']}
   ['a','b'] contiene 'b' come word.
 '''
 def func1(a_dict : dict[str,list[str]], word : str) -> int :
-    counter = 0
-    for k,s in list(a_dict.items()):
-        if (word in s):
-           a_dict.pop(k)
-           counter+=1
-    return counter
+    count = 0
+    keys_to_remove = [k for k, v in a_dict.items() if word in v]
+    for k in keys_to_remove:
+        a_dict.pop(k)
+        count += 1
+    # counter = 0
+    # for k,s in list(a_dict.items()):
+    #     if (word in s):
+    #        a_dict.pop(k)
+    #        counter+=1
+    return count
 
 # a = {'a':['a','b','c'], 'b':['a','b'], 'c':['a','c']}
 # print(func1(a, 'b')) # 2
@@ -77,13 +82,14 @@ La terza lista e' ["b", "a", "a"] e l'elemento in posizione 0 e'  "b".
 
 
 def func2(D : dict[int, list[str]]) -> list[str]:
+    final_list = [sorted(v, reverse=True)[k] for k, v in D.items()]
+    return final_list
     # scrivi qui il tuo codice
-    W:list=[]
-    for k,v in D.items():
-        v.sort(reverse=True)
-        W.append(v[k])
-        
-    return W
+    # W = []
+    # for k,v in D.items():
+    #     v.sort(reverse=True)
+    #     W.append(v[k])
+    #     return W
 
 # D = {4: ["c", "h", "f", "g", "e"], 2: ["a", "z", "b", "w"], 0: ["a", "b", "a"]}
 # print(func2(D)) # ["c", "b", "b"]
@@ -109,15 +115,16 @@ Per convertire caratteri in codici ascii si puo' usare la funzione ord().
 '''
 
 def func3(strList : list[str]) -> list[int]:
+    lista_codici = [sum(ord(c) for c in s) for s in (sorted(strList))]
     # scrivi qui il tuo codice
-    Listapp:list=[]
-    for s in sorted(strList):
-        conteggio = 0
-        for c in s:
-            conteggio += (ord(c))
-        Listapp.append(conteggio)
-        
-    return Listapp
+    # Listapp:list=[]
+    # for s in sorted(strList):
+    #     conteggio = 0
+    #     for c in s:
+    #         conteggio += (ord(c))
+    #     Listapp.append(conteggio)
+    #
+    return lista_codici
 
 # strList = ["monkey", "cat", "panda", "alligator"]
 # print(func3(strList)) # [959, 312, 659, 516]
@@ -150,22 +157,25 @@ Esempio: se string_list1=['shop', 'park', 'elichopter', 'cat', 'elephant'] e
 '''
 
 def func4(string_list1 : list[str], string_list2 : list[str]) -> list[str]:
-    res_list:list = []
-    for s1 in string_list1:
-        for s2 in string_list2:
-            rev_s2 = s2 [::-1]
-            if ((s2 in s1) or(rev_s2 in s1)):
-                res_list.append(s1)
-    for s1 in string_list2:
-        for s2 in string_list1:
-            rev_s2 = s2 [::-1]
-            if ((s2 in s1) or(rev_s2 in s1)):
-                res_list.append(s1)
-    def criterio(s):
-        return (-len(s), s)
-    sorted(res_list,  key=lambda x: (-len(x), x))
-    print("risultato: ",res_list)
-    return res_list
+    parole1 = [p for p in string_list1 if any(s in p or s[::-1] in p for s in string_list2)]
+    parole2 = [p for p in string_list2 if any(s in p or s[::-1] in p for s in string_list1)]
+    return sorted(parole1 + parole2, key=lambda x: (-len(x), x))
+    # res_list:list = []
+    # for s1 in string_list1:
+    #     for s2 in string_list2:
+    #         rev_s2 = s2 [::-1]
+    #         if ((s2 in s1) or(rev_s2 in s1)):
+    #             res_list.append(s1)
+    # for s1 in string_list2:
+    #     for s2 in string_list1:
+    #         rev_s2 = s2 [::-1]
+    #         if ((s2 in s1) or(rev_s2 in s1)):
+    #             res_list.append(s1)
+    # def criterio(s):
+    #     return (-len(s), s)
+    # sorted(res_list,  key=lambda x: (-len(x), x))
+    # print("risultato: ",res_list)
+    # return res_list
 # =============================================================================
 #  parole1 = [p for p in string_list1 if any(s in p or s[::-1] in p for s in string_list2)]
 #  parole2 = [p for p in string_list2 if any(s in p or s[::-1] in p for s in string_list1)]
