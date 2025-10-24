@@ -40,13 +40,13 @@ Esempio: se a_dict = {'a':['a','b','c'], 'b':['a','b'], 'c':['a','c']}
   ['a','b'] contiene 'b' come word.
 '''
 def func1(a_dict : dict[str,list[str]], word : str) -> int :
-    counter = 0
-    for k,s in list(a_dict.items()):
-        if word in s:
-           a_dict.pop(k)
-           counter+=1
+    counter = sum(1 for k,s in list(a_dict.items()) if word in s and a_dict.pop(k))
     return counter
-
+    # counter = 0
+    # for k,s in list(a_dict.items()):
+    #     if word in s:
+    #        a_dict.pop(k)
+    #        counter+=1
 # a = {'a':['a','b','c'], 'b':['a','b'], 'c':['a','c']}
 # print(func1(a, 'b')) # 2
 # print(a) # {'c': ['a', 'c']}
@@ -77,13 +77,14 @@ La terza lista e' ["b", "a", "a"] e l'elemento in posizione 0 e'  "b".
 
 
 def func2(D : dict[int, list[str]]) -> list[str]:
+    w = [sorted(v, reverse=True)[k] for k,v in D.items()]
     # scrivi qui il tuo codice
-    W:list=[]
-    for k,v in D.items():
-        v.sort(reverse=True)
-        W.append(v[k])
+    # W:list=[]
+    # for k,v in D.items():
+    #     v.sort(reverse=True)
+    #     W.append(v[k])
         
-    return W
+    return w
 
 # D = {4: ["c", "h", "f", "g", "e"], 2: ["a", "z", "b", "w"], 0: ["a", "b", "a"]}
 # print(func2(D)) # ["c", "b", "b"]
@@ -109,15 +110,16 @@ Per convertire caratteri in codici ascii si puo' usare la funzione ord().
 '''
 
 def func3(strList : list[str]) -> list[int]:
+    lista= [sum(ord(c) for c in s) for s in sorted(strList)]
     # scrivi qui il tuo codice
-    Listapp:list=[]
-    for s in sorted(strList):
-        conteggio = 0
-        for c in s:
-            conteggio += (ord(c))
-        Listapp.append(conteggio)
+    # Listapp:list=[]
+    # for s in sorted(strList):
+    #     conteggio = 0
+    #     for c in s:
+    #         conteggio += (ord(c))
+    #     Listapp.append(conteggio)
         
-    return Listapp
+    return lista
 
 # strList = ["monkey", "cat", "panda", "alligator"]
 # print(func3(strList)) # [959, 312, 659, 516]
@@ -211,13 +213,12 @@ più vicini a (0, 0) è: (1.0, 0.667)
 
 from math import sqrt
 def func5(points : list[tuple[int,int]]) -> tuple[float,float]:
+    # scrivi qui il tuo codice
     distanze = [sqrt(x**2 + y**2) for x,y in points]
     points   = [p for _,p in sorted(zip(distanze,points))][:3]
     return (round(sum(x for x,_ in points)/3, 3),
             round(sum(y for _,y in points)/3, 3))
 
-    # scrivi qui il tuo codice
-    pass
 
 # points = [(2, 2), (-1, 1), (3, 0), (3, 2), (2, -1)]
 # print(func5(points)) # (1.0, 0.667)
